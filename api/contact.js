@@ -12,21 +12,31 @@ module.exports = async (req, res) => {
     try {
         const { name, email, message } = req.body;
 
-        const data = await resend.emails.send({
+        const { data, error } = await resend.emails.send({
             from: "Portfolio <onboarding@resend.dev>",
             to: ["pateldiksha2007@gmail.com"],
             subject: `New Portfolio Message from ${name}`,
             replyTo: email,
             html: `
                 <h2>New Message from Portfolio</h2>
-
                 <p><strong>Name:</strong> ${name}</p>
                 <p><strong>Email:</strong> ${email}</p>
-
                 <h3>Message:</h3>
                 <p>${message}</p>
             `
         });
+
+        if (error) {
+            console.error("RESEND ERROR:", error);
+
+            return res.status(500).json({
+                success: false,
+                message: "Email failed",
+                error: error.message
+            });
+        }
+
+        console.log("EMAIL SENT:", data);
 
         return res.status(200).json({
             success: true,
@@ -34,7 +44,7 @@ module.exports = async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
+        console.error("SERVER ERROR:", error);
 
         return res.status(500).json({
             success: false,

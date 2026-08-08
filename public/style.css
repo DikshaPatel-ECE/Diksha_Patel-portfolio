@@ -1456,3 +1456,17 @@ padding:40px 20px;
     box-shadow:0 10px 20px rgba(74,108,247,.35);
 
 }
+.photo-links {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.photo-links a {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    margin: 0;
+    line-height: 1.2;
+    text-decoration: none;
+}
